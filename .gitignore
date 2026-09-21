@@ -1,0 +1,35 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Compiled files
+build
+build-ide
+h5p
+coverage
+typedoc
+
+# vscode
+.DS_Store
+microsoft.gpg
+.env 
+
+# Dependency directory
+node_modules
+
+# Downloaded and generated files
+test/data/hub-content/*
+test/data/content-type-cache/real-content-types.json
+test/data/hub-content-extracted/*
+packages/h5p-html-exporter/test/data/content/*
+packages/h5p-examples/public
+google_translate.json
+.json-autotranslate-cache
+
+.dccache
+
+# Playwright E2E test output
+packages/h5p-e2e/test-results/
+packages/h5p-e2e/playwright-report/
+packages/h5p-e2e/blob-report/

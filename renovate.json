@@ -1,0 +1,46 @@
+{
+    "extends": ["config:recommended", "group:monorepos", "group:recommended"],
+    "labels": ["[type] chore", "[status] needs review"],
+    "dependencyDashboard": true,
+    "schedule": ["before 6am on monday"],
+    "prConcurrentLimit": 10,
+    "prHourlyLimit": 50,
+    "lockFileMaintenance": {
+        "enabled": true,
+        "schedule": ["before 6am on monday"]
+    },
+    "packageRules": [
+        {
+            "updateTypes": [
+                "minor",
+                "patch",
+                "pin",
+                "digest",
+                "lockFileMaintenance"
+            ],
+            "automerge": true
+        },
+        {
+            "updateTypes": ["major"],
+            "labels": [
+                "[type] chore",
+                "[status] needs review",
+                "[type] BREAKING CHANGE"
+            ]
+        },
+        {
+            "matchManagers": ["github-actions"],
+            "groupName": "github actions"
+        },
+        {
+            "matchPackagePrefixes": ["@types/"],
+            "groupName": "type definitions"
+        }
+    ],
+    "vulnerabilityAlerts": {
+        "labels": ["[type] security", "[status] needs review"],
+        "schedule": ["at any time"]
+    },
+    "semanticCommits": true,
+    "semanticCommitType": "chore"
+}
