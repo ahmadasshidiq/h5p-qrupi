@@ -98,6 +98,8 @@ const addCsrfTokenToUser = (req, res, next): void => {
 };
 
 const start = async (): Promise<void> => {
+    // Resolve storage relative to this package, independent of the process cwd.
+    const h5pPath = path.resolve(__dirname, '../h5p');
     const useTempUploads = process.env.TEMP_UPLOADS != 'false';
     if (useTempUploads) {
         tmpDir = await dir({ keep: false, unsafeCleanup: true });
@@ -176,15 +178,15 @@ const start = async (): Promise<void> => {
         config,
         urlGenerator,
         permissionSystem,
-        path.resolve('h5p/libraries'), // the path on the local disc where
+        path.join(h5pPath, 'libraries'), // the path on the local disc where
         // libraries should be stored)
-        path.resolve('h5p/content'), // the path on the local disc where content
+        path.join(h5pPath, 'content'), // the path on the local disc where content
         // is stored. Only used / necessary if you use the local filesystem
         // content storage class.
-        path.resolve('h5p/temporary-storage'), // the path on the local disc
+        path.join(h5pPath, 'temporary-storage'), // the path on the local disc
         // where temporary files (uploads) should be stored. Only used /
         // necessary if you use the local filesystem temporary storage class.
-        path.resolve('h5p/user-data'),
+        path.join(h5pPath, 'user-data'),
         (key, language) => translationFunction(key, { lng: language })
     );
 
@@ -327,9 +329,9 @@ const start = async (): Promise<void> => {
         csrfProtection,
         h5pAjaxExpressRouter(
             h5pEditor,
-            path.resolve('h5p/core'), // the path on the local disc where the
+            path.join(h5pPath, 'core'), // the path on the local disc where the
             // files of the JavaScript client of the player are stored
-            path.resolve('h5p/editor'), // the path on the local disc where the
+            path.join(h5pPath, 'editor'), // the path on the local disc where the
             // files of the JavaScript client of the editor are stored
             undefined,
             'auto' // You can change the language of the editor here by setting
