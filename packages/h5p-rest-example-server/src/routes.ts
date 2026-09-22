@@ -68,6 +68,23 @@ export default function (
     });
 
     router.get(
+        '/new',
+        async (req: IRequestWithLanguage & { user: H5P.IUser }, res) => {
+            // A new content item has no content id yet. The client uses the
+            // dedicated /new endpoint instead of sending "undefined" as an id.
+            const editorModel = (await h5pEditor.render(
+                undefined,
+                languageOverride === 'auto'
+                    ? (req.language ?? 'en')
+                    : languageOverride,
+                req.user
+            )) as H5P.IEditorModel;
+
+            res.status(200).send(editorModel);
+        }
+    );
+
+    router.get(
         '/:contentId/edit',
         async (req: IRequestWithLanguage & { user: H5P.IUser }, res) => {
             // This route merges the render and the /ajax/params routes to avoid a

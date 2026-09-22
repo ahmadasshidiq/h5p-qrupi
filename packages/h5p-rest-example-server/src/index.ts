@@ -206,10 +206,21 @@ const start = async (): Promise<void> => {
 
     // We now set up the Express server in the usual fashion.
     const server = express();
+    const allowedCorsOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
+        .split(',')
+        .map((origin) => origin.trim())
+        .filter(Boolean);
 
     server.use(
         cors({
-            origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+            origin: (requestOrigin, callback) => {
+                // Non-browser requests have no Origin header and are allowed.
+                if (!requestOrigin || allowedCorsOrigins.includes(requestOrigin)) {
+                    callback(null, true);
+                } else {
+                    callback(new Error('Origin not allowed by CORS'));
+                }
+            },
             credentials: true
         })
     );
