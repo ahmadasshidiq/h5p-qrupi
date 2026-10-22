@@ -26,7 +26,7 @@ export default class ContentUserDataController {
         res: express.Response<IAjaxResponse<string>>
     ): Promise<void> => {
         if (!this.config.contentUserStateSaveInterval) {
-            res.status(403).end();
+            res.status(200).json(new AjaxSuccessResponse(false));
             return;
         }
 

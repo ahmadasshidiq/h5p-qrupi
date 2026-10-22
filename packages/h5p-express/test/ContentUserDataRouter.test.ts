@@ -203,7 +203,7 @@ describe('ContentUserData endpoint adapter', () => {
         expect(res.status).toBe(403);
     });
 
-    it('returns 403 when calling GET with feature disabled', async () => {
+    it('returns empty state when calling GET with feature disabled', async () => {
         const contentId = 'contentId';
         const dataType = 'state';
         const subContentId = '0';
@@ -214,6 +214,7 @@ describe('ContentUserData endpoint adapter', () => {
             `/contentUserData/${contentId}/${dataType}/${subContentId}`
         );
 
-        expect(res.status).toBe(403);
+        expect(res.status).toBe(200);
+        expect(res.body).toMatchObject({ success: true, data: false });
     });
 });
